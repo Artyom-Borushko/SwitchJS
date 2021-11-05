@@ -1,0 +1,16 @@
+table,
+td {
+  border: 1px solid black;
+}
+
+table {
+  position: relative;
+}
+
+td {
+  padding: 3px;
+}
+
+[draggable] {
+  cursor: move;
+}
