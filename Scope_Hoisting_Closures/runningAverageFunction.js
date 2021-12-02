@@ -5,9 +5,9 @@ function runningAverage() {
     return function (value) {
         initialStorage.push(value);
         let sumOfArrayElements = 0;
-        for (let index = 0; index < initialStorage.length; index++) {
-            sumOfArrayElements += initialStorage[index];
-        };
+        for (const iterator of initialStorage) {
+            sumOfArrayElements += iterator;
+        }
         return sumOfArrayElements / initialStorage.length
     };
 };
