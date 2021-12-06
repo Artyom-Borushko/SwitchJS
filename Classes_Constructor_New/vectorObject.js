@@ -4,72 +4,70 @@ class Vector {
         this.args = args;
     };
     
+    #lengthVerifier(instance) {
+        if (instance.args.length !== this.args.length) throw new Error("Vectors have different length");
+    };
+
     add(instance) {
         try {
-            if (instance.args.length > 3) {
-                throw new Error(`Maximum arguments length is 3, but ${instance.args.length} provided`)
-            }
-            const sum = this.args.map((elem, index) => elem + instance.args[index])
-            return sum;
+            this.#lengthVerifier(instance);
+            return this.args.map((elem, index) => elem + instance.args[index]);
         } catch (error) {
-            console.log('Error in arguments: ' + error.message);
+            console.error('Error in arguments: ' + error.message);
         }
     };
 
     subtract(instance) {
         try {
-            if (instance.args.length > 3) {
-                throw new Error(`Maximum arguments length is 3, but ${instance.args.length} provided`)
-            }
-            const subtraction = this.args.map((elem, index) => elem - instance.args[index]);
-            return subtraction;
+            this.#lengthVerifier(instance);
+            return this.args.map((elem, index) => elem - instance.args[index]);
         } catch (error) {
-            console.log('Error in arguments: ' + error.message);
+            console.error('Error in arguments: ' + error.message);
         }
     };
 
     dot(instance) {
         try {
-            if (instance.args.length > 3) {
-                throw new Error(`Maximum arguments length is 3, but ${instance.args.length} provided`)
-            }
-            const dotMultiply = this.args.map((elem, index) => elem * instance.args[index]);
-            const dotSum = dotMultiply.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-            return dotSum;
+            this.#lengthVerifier(instance);
+            return this.args
+                .map((elem, index) => elem * instance.args[index])
+                .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         } catch (error) {
-            console.log('Error in arguments: ' + error.message);
+            console.error('Error in arguments: ' + error.message);
         }
     };
 
     norm(instance) {
-        const bitwiseXOR = this.args.map((elem, index) => elem ^ instance.args[index])
-            .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-        return Math.sqrt(bitwiseXOR);
+        try {
+            this.#lengthVerifier(instance);
+            const bitwiseXOR = this.args.map((elem, index) => elem ^ instance.args[index])
+                .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+            return Math.sqrt(bitwiseXOR);
+        } catch (error) {
+            console.error('Error in arguments: ' + error.message);
+        }
     };
 
-    toString(instance) {
-        const argsAsString = this.args.join(',');
-        if (argsAsString === instance.args.join(',')) return 'Instances is the same';
-        return 'Instances is not the same'
-    }
+    toString() {
+        return this.args.join(', ');
+    };
+
+    equals(instance) {
+        return this.args.join(',') === instance.args.join(',');
+    };
 }
 
 const a = new Vector([1, 2, 3]);
 const b = new Vector([3, 4, 5]);
 const c = new Vector([5, 6, 7, 8]);
-const t = new Vector([1, 2, 3]);
+
 
 // console.log(a.add(b));
 // console.log(a.subtract(b));
 // console.log(a.dot(b));
 // console.log(a.norm(b));
 // console.log(a.add(c));
-// console.log(a.subtract(c));
-// console.log(a.dot(c));
-// console.log(a.toString(t));
-
-
-
-
-
+// console.log(a.toString());
+// console.log(a.equals(b));
+// console.log(a.equals(a));
 
