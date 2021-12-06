@@ -39,11 +39,10 @@ function NamedOne(fName, lName, personAge) {
 const namedTwo = new NamedOne("Naomi", "Wang", 20);
 const namedThree = new NamedOne("Wang", "Naomi", 2);
 
-function getAverageAge(...users) {
+NamedOne.getAverageAge = function(...users) {
     return users.reduce((accumulator, user) => accumulator + user.age, 0) / users.length;
 };
-// console.log(getAverageAge(namedTwo, namedThree));
-
+// console.log(NamedOne.getAverageAge(namedTwo, namedThree));
 
 // const namedOne = new NamedOne("Naomi");
 // namedOne.fullName;
