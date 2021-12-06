@@ -9,27 +9,21 @@ function NamedOne(fName, lName) {
         get firstName() {
             return this.fName;
         },
-
         set firstName(newName) {
             this.fName = newName;
         },
-
         get lastName() {
             return this.lName;
         },
-
         set lastName(newLastName) {
             this.lName = newLastName;
         },
-
         get fullName() {
             return `${this.fName} ${this.lName}`
         },
-
         set fullName(newFullName) {
             const arr = newFullName.split(' ');
-            if (arr.length < 2) return;
-            [this.fName, this.lName] = arr;
+            if (arr.length === 2) [this.fName, this.lName] = arr;
         },
     };
 };
@@ -45,10 +39,10 @@ const namedOne = new NamedOne("Naomi", "Wang");
 // console.log(namedOne.lastName);
 
 // console.log(namedOne.fullName);
-// namedOne.fullName = 'Artyom Borushko'
+// namedOne.fullName = 'Artyom1 Borushko1'
 // console.log(namedOne.fullName);
 
-// namedOne.fullName = 'Artyom Borushko'
+// namedOne.fullName = 'Artyom2 Borushko2'
 // console.log(namedOne.firstName);
 // console.log(namedOne.lastName);
 
