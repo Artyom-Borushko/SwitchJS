@@ -1,29 +1,48 @@
 
+function createTable(rows, columns) {
+    const table = document.createElement('table');
+    document.body.appendChild(table);
+    for (let row = 1; row <= rows; row++) {
+        const tableRow = table.insertRow();
+        for (let column = 1; column <= columns; column++) {
+            const tableColumn = tableRow.insertCell();
+            tableColumn.style.border = '1px solid black';
+            tableColumn.style.padding = '5px';
+            tableColumn.draggable = 'true';
+        };
+    };
+};
+createTable(100, 100);
 
-let elements = document.querySelectorAll('td')
-for (let i = elements.length - 1; i >= 0; i--) {
-    elements[i].draggable = 'true';
-}
 
 let myX = '';
 let myY = '';
 let tableCell = '';
 
-document.querySelector('table').addEventListener('dragstart', function (e) {
+const tableLocator = document.querySelector('table');
+
+function onTableCellClick(event) {
+    if (event.target.nodeName === 'TD') alert('Clicked');
+};
+
+
+tableLocator.addEventListener('click', onTableCellClick);
+
+tableLocator.addEventListener('dragstart', function (e) {
     tableCell = e.target;
     myX = e.offsetX;
     myY = e.offsetY;
     tableCell.style.position = 'absolute';
     tableCell.style.border = '1px solid red';
-}, false)
+}, false);
 
-document.querySelector('table').addEventListener('dragover', function (e) {
+tableLocator.addEventListener('dragover', function (e) {
     e.preventDefault();
-}, false)
+}, false);
 
-document.querySelector('table').addEventListener('drop', function (e) {
+tableLocator.addEventListener('drop', function (e) {
     e.preventDefault();
     tableCell.style.left = e.pageX - myX + 'px';
     tableCell.style.top = e.pageY - myY + 'px';
-}, false)
+}, false);
 
