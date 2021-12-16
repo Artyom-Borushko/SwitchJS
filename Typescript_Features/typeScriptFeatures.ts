@@ -1,48 +1,64 @@
+
 interface DogInterface {
-    animalType(animalInfo: AnimalTypeParam): AnimalTypeParam;
     isInRedBook: true | false;
     canLiveAtHome: CanLiveAtHomeInterface;
 }
 
-interface AnimalTypeParam {
+interface AnimalData {
     typeOfAnimal: string;
-    name: string
+    name: string;
 }
 
 interface CanLiveAtHomeInterface {
-    canLiveAtHome: string;
+    canLiveAtHome: boolean;
 }
 
 abstract class Animal {
-    move(distanceInMeters: number = 0) {
-        console.log(`Animal moved ${distanceInMeters}m`);
+    move(distanceInMeters: number = 0): string {
+        return `Animal moved ${distanceInMeters}m`;
     }
-    abstract animalType<T>(typeOfAnimal: T);
+    abstract getAnimalData(): string;
+    abstract setAnimalData(animalInfo: AnimalData): void;
+    abstract calculateTaxes(): number;
 }
 
-class Dog<TKey, TValue> extends Animal implements DogInterface{
+class Dog<T, K> extends Animal implements DogInterface {
+
+    canLiveAtHome: CanLiveAtHomeInterface = { canLiveAtHome: true };
+    private animalData: string;
+
     constructor(
-        public key: TKey,
-        public value: TValue
+        public height: T,
+        public weight: K,
+        public isInRedBook: true | false,
         ) {
             super();
+            this.isInRedBook = isInRedBook;
     }
-    isInRedBook: false = false;
 
-    public canLiveAtHome: CanLiveAtHomeInterface = { canLiveAtHome: 'yes' };
+    setAnimalData(animalData: AnimalData): void {
+        const obj = JSON.stringify(animalData);
+        this.animalData = `Animal data is ${obj}, height: ${this.height}, weight: ${this.weight}`;
+    }
+    getAnimalData(): string {
+        return this.animalData;
+    }
 
-    animalType<T>(animalInfo: T): T {
-        let obj = JSON.stringify(animalInfo)
-        console.log(`Animal data is ${obj}, ${this.key}, ${this.value}`);
-        return animalInfo;
+    calculateTaxes(): number {
+        if (typeof this.height === 'number' && typeof this.weight === 'number') {
+            return this.height * this.weight * 0.1;
+        }
+        return -1;
     }
 }
-const dog1 = new Dog(1, 'First');
-dog1.move(10);
-let passedObj: AnimalTypeParam = {
+
+const dog = new Dog(10, 20, false);
+
+dog.setAnimalData({
     typeOfAnimal: 'Dog',
-    name: 'Jack'
-}
-dog1.animalType(passedObj);
-console.log(dog1.canLiveAtHome)
-console.log(dog1.key);
+    name: 'Jack',
+});
+console.log(dog.move(10));
+console.log(dog.canLiveAtHome);
+console.log(dog.calculateTaxes());
+console.log(dog.getAnimalData());
